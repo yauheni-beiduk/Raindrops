@@ -1,0 +1,50 @@
+html {
+    box-sizing: border-box;
+    background: wheat;
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.game-place {
+    display: flex;
+    flex: 3 1 auto;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    flex:1 1 auto;
+}
+
+.calc {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "result result result result"
+    "seven eight nine clear"
+    "four five six clear"
+    "one two three enter"
+    "zero zero delete enter";
+    border: solid 6px black;
+}
+.seven { grid-area: seven; }
+.eight { grid-area: eight; }
+.nine { grid-area: nine; }
+.four { grid-area: four; }
+.five { grid-area: five; }
+.six { grid-area: six; }
+.result { grid-area: result; }
+.one { grid-area: one; }
+.two { grid-area: two; }
+.three { grid-area: three; }
+.clear { grid-area: clear; }
+.enter { grid-area: enter; }
+.delete { grid-area: delete; }
+.zero { grid-area: zero; }
