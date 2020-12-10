@@ -1,24 +1,38 @@
-html {
+* {
     box-sizing: border-box;
-    background: wheat;
 }
 
+body {
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
 
 .wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .game-place {
     display: flex;
-    flex: 3 1 auto;
+    flex: 5 1 auto;
+    position: relative;
+    background: white;
 }
 
 .calculator {
     display: flex;
     flex-direction: column;
-    flex:1 1 auto;
+    position: relative;
+    background-color:#80f2eb;
+    align-items: center;
 }
 
 .calc {
@@ -32,7 +46,11 @@ html {
     "four five six clear"
     "one two three enter"
     "zero zero delete enter";
-    border: solid 6px black;
+    border: solid 5px black;
+    margin: 50px 20px 0px 20px;
+    height: 60%;
+    width: 90%;
+    border-radius: 25px 25px 0px 0px;
 }
 .seven { grid-area: seven; }
 .eight { grid-area: eight; }
@@ -40,7 +58,12 @@ html {
 .four { grid-area: four; }
 .five { grid-area: five; }
 .six { grid-area: six; }
-.result { grid-area: result; }
+.result { 
+    height: 15vh;
+    grid-area: result;
+    background-color: wheat;
+    border-radius: 20px 20px 0px 0px ;
+ }
 .one { grid-area: one; }
 .two { grid-area: two; }
 .three { grid-area: three; }
@@ -48,3 +71,67 @@ html {
 .enter { grid-area: enter; }
 .delete { grid-area: delete; }
 .zero { grid-area: zero; }
+
+.calc-button {
+    font-size: 10px;
+    border: solid 1px rgb(155, 135, 135);
+    background-color: whitesmoke;
+    outline: none;
+}
+
+.calc-button-numbers {
+    font-size: 50px;
+    cursor: pointer;
+
+}
+
+.calc-button-text {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.calc-button:hover {
+    background-color: rgb(230, 216, 32);
+}
+
+ .score {
+    display: flex;
+    height: 10%;
+    width: 90%;
+    transform: translateY(-35%);
+    border: solid 3px white;
+    border-radius: 35%;
+    background-color: tomato;
+} 
+
+.star {
+   margin: 25px;
+}
+
+
+
+
+
+.wave {
+    position: absolute;
+    width: 300%;
+    height: 100%;
+    background-image: url(images/wave.svg);
+    background-repeat: repeat no-repeat;
+    background-position: 0 bottom;
+    transform-origin: center bottom;
+      background-size: 50% 20%;
+  animation: move_wave 3s linear infinite;
+}
+
+@keyframes move_wave {
+    0% {
+        transform: translateX(0) translateZ(0) scaleY(1)
+    }
+    50% {
+        transform: translateX(-25%) translateZ(0) scaleY(0.55)
+    }
+    100% {
+        transform: translateX(-50%) translateZ(0) scaleY(1)
+    }
+}
