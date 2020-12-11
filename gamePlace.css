@@ -24,7 +24,7 @@ body {
     display: flex;
     flex: 5 1 auto;
     position: relative;
-    background: white;
+    background: linear-gradient(to top, rgb(110, 218, 240), rgb(123, 221, 241), rgb(136, 225, 243), rgb(150, 228, 244), rgb(163, 231, 245), rgb(176, 235, 247), rgb(189, 238, 248), rgb(202, 242, 250), rgb(215, 245, 251), rgb(229, 248, 252), rgb(242, 252, 254), rgb(255, 255, 255));
 }
 
 .calculator {
@@ -108,9 +108,12 @@ body {
    margin: 25px;
 }
 
-
-
-
+.rock {
+    display: flex;
+    position: absolute;
+    top: 45%;
+    left: 25%;
+}
 
 .wave {
     position: absolute;
@@ -120,8 +123,8 @@ body {
     background-repeat: repeat no-repeat;
     background-position: 0 bottom;
     transform-origin: center bottom;
-      background-size: 50% 20%;
-  animation: move_wave 3s linear infinite;
+    background-size: 50% 20%;
+    animation: move_wave 3s linear infinite;
 }
 
 @keyframes move_wave {
@@ -134,4 +137,54 @@ body {
     100% {
         transform: translateX(-50%) translateZ(0) scaleY(1)
     }
+}
+
+
+
+
+
+
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+
+.calc-button {
+    font-size: 10px;
+}
+
+.calc {
+    height: 30%;
+    width: 150px;
+    }
+
+.score {
+    height: 6%;
+    width: 100px;
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+ }
+
+.calculator {
+    width: 25vh;
+ }
+
+.rock {
+    width: 110px;
+    top: 57%;
+} 
+
+.result {
+    height: 10vh;
+}
+.score-text{
+    font-size: 15px;
+}
+
+.wave {
+    background-size: 50% 6%;
+}
+
 }
