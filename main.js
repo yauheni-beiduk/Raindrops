@@ -3,6 +3,10 @@ const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
+const song = document.querySelector('.sound');
+
+//Play song
+//song.play();
 
 
 function numbersClick(number) {
@@ -30,6 +34,7 @@ function deleteNumber() {
     }
     else return  result.textContent = '0';
 }
+
 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
