@@ -62,7 +62,9 @@ body {
     height: 15vh;
     grid-area: result;
     background-color: wheat;
-    border-radius: 20px 20px 0px 0px ;
+    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+    font-size: 80px;
  }
 .one { grid-area: one; }
 .two { grid-area: two; }
@@ -148,7 +150,7 @@ body {
 @media screen and (min-width: 320px) and (max-width: 768px) {
 
 .calc-button {
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .calc {
@@ -169,7 +171,7 @@ body {
  }
 
 .calculator {
-    width: 25vh;
+    width: 23vh;
  }
 
 .rock {
@@ -178,7 +180,8 @@ body {
 } 
 
 .result {
-    height: 10vh;
+    height: 8vh;
+    font-size:30px;
 }
 .score-text{
     font-size: 15px;
