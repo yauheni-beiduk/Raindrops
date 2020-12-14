@@ -4,8 +4,29 @@ const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
 const song = document.querySelector('.sound');
+const wave = document.getElementById('.wave');
+
+let answerCorrect = false;
+
+
 //Play song
 //song.play();
+
+
+
+function getRandomNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+};
+getRandomNumber(min, max);
+
+function getRandomOperator(){
+    let operators = Array('+','-','*','/');
+    let item = operators[Math.floor(Math.random()*operators.length)];
+    return item
+};
+getRandomOperator();
 
 
 function numbersClick(number) {
