@@ -27,11 +27,11 @@ function getRandomEquation() {
         return operator
     };
 
-    const x = getRandomNumber(min, max);
+    const x = getRandomNumber(0, 10);
     const y = getRandomOperator();
-    const z = getRandomNumber(min, max);
+    const z = getRandomNumber(0, 10);
     if (x>z) {
-        return (x + y + z)
+        return (x+ y + z)
     }
         return (z + y + x)
 }
@@ -80,9 +80,12 @@ this.res = res;
 this.color = color;
 }
 createDrop() {
+    const a = getRandomEquation();
+    const drop = document.getElementById('drop');
     let div = document.createElement('div');
     div.className = "raindrop";
-    document.body.append(div);
+    drop.append(div);
+    div.append(a);
 }
 };
 
