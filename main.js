@@ -4,7 +4,6 @@ const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
 const song = document.querySelector('.sound');
-
 //Play song
 //song.play();
 
@@ -21,7 +20,7 @@ function resultScreen(e) {
     if (result.textContent.length > 5) {
       return result.textContent
     }
-    numbersClick(e.target.textContent)
+    numbersClick(e.target.textContent);
 };
 
 function clearScreen() {
@@ -35,7 +34,11 @@ function deleteNumber() {
     else return  result.textContent = '0';
 }
 
+// function btnClick(btns) {
+// const btns = document.querySelectorAll(`.calc-button-numbers[data-key="${e.key}"]`)
 
+// }
+// btns.forEach(number => number.addEventListener('keypress',  resultScreen ));  
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);

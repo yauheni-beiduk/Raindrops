@@ -96,7 +96,7 @@ body {
     background-color: rgb(230, 216, 32);
 }
 
- .score {
+.score {
     display: flex;
     height: 10%;
     width: 90%;
@@ -140,7 +140,6 @@ body {
         transform: translateX(-50%) translateZ(0) scaleY(1)
     }
 }
-
 
 
 
