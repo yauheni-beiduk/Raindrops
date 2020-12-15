@@ -5,6 +5,7 @@ const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
 const song = document.querySelector('.sound');
 const wave = document.getElementById('.wave');
+const drop = document.getElementById('drop');
 
 let answerCorrect = false;
 
@@ -12,7 +13,10 @@ let answerCorrect = false;
 //Play song
 //song.play();
 
-// RANDOM NUMBER AND OPERATOR
+
+
+
+//RANDOM NUMBER AND OPERATOR
 function getRandomEquation() {
 
     function getRandomNumber(min, max) {
@@ -22,8 +26,8 @@ function getRandomEquation() {
     };
 
     function getRandomOperator(){
-        let operators = Array('+','-','*');
-        let operator = operators[Math.floor(Math.random()*operators.length)];
+        var operators = Array('+','-','*');
+        var operator = operators[Math.floor(Math.random()*operators.length)];
         return operator
     };
 
@@ -31,10 +35,11 @@ function getRandomEquation() {
     const y = getRandomOperator();
     const z = getRandomNumber(0, 10);
     if (x>z) {
-        return (x+ y + z)
+        return (x + y + z);
     }
-        return (z + y + x)
+        return (z + y + x);
 }
+
 
 
 // CLICK CALCULATOR
@@ -47,6 +52,7 @@ function numbersClick(number) {
     };
 };
 
+
 function resultScreen(e) { 
     if (result.textContent.length > 5) {
       return result.textContent
@@ -54,9 +60,11 @@ function resultScreen(e) {
     numbersClick(e.target.textContent);
 };
 
+
 function clearScreen() {
    return  result.textContent = '0';
 }
+
 
 function deleteNumber() {
     if(result.textContent.length > 1 ) {
@@ -65,35 +73,51 @@ function deleteNumber() {
     return  result.textContent = '0';
 }
 
-// function btnClick(btns) {
-// const btns = document.querySelectorAll(`.calc-button-numbers[data-key="${e.key}"]`)
 
-// }
-// btns.forEach(number => number.addEventListener('keypress',  resultScreen ));  
+
+
 
 class Drop {
-constructor(speed, equation, res, color) {
+    constructor(speed, equation=getRandomEquation(), res, color) {
 
-this.speed = speed;
-this.equation = equation;
-this.res = res;
-this.color = color;
-}
-createDrop() {
-    const a = getRandomEquation();
-    const drop = document.getElementById('drop');
-    let div = document.createElement('div');
-    div.className = "raindrop";
-    drop.append(div);
-    div.append(a);
-}
+    this.speed = speed;
+    this.equation = equation;
+    this.res = res;
+    this.color = color;
+    }
+    createDrop() {
+        const drop = document.getElementById('drop');
+        let div = document.createElement('div');
+        div.className = "raindrop";
+        
+        drop.appendChild(div);
+        div.append(this.equation);
+        const x = eval(this.equation);
+        return x;
+    }
 };
+
+
+
+const arrayResult = [];
+function arrays() {
+arrayResult.push(new Drop().createDrop());
+return arrayResult;
+}
+
+
+function enterNumber() {
+    if(arrayResult[0] == result.textContent) {
+    console.log(true);
+    }
+    else console.log(false);
+}
 
 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
 deleteBtn.addEventListener('click', deleteNumber);
-
+enterBtn.addEventListener('click', enterNumber);
 
 
