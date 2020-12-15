@@ -89,8 +89,8 @@ class Drop {
         const drop = document.getElementById('drop');
         let div = document.createElement('div');
         div.className = "raindrop";
-        
         drop.appendChild(div);
+        div.style.left =Math.random()*90+'%';
         div.append(this.equation);
         const x = eval(this.equation);
         return x;
@@ -107,7 +107,7 @@ return arrayResult;
 
 
 function enterNumber() {
-    if(arrayResult[0] == result.textContent) {
+    if(arrayResult[arrayResult.length-1] == result.textContent) {
     console.log(true);
     }
     else console.log(false);

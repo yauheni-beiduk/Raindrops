@@ -207,4 +207,16 @@ body {
     justify-content: center;
     flex-direction: column;
     text-align: center;
-  }
+    animation: down 10s;
+    z-index: 4;
+  }             
+
+@keyframes down {
+  0% {
+      transform: translateY(0%);
+  }  
+       
+  100% {
+      transform: translateY(75vh);
+  }       
+}
