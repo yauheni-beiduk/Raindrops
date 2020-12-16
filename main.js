@@ -9,6 +9,7 @@ const drop = document.getElementById('drop');
 const scoreTable = document.getElementById('score-table');
 //const trueSong = document.getElementById('soundTrue');
 //const falseSong = document.getElementById('soundFalse');
+const waveHeight = document.getElementById('.wave-wrapper');
 let count = 10;
 let score = 0;
 let dropsCount = 1;
@@ -119,7 +120,6 @@ function arrays() {
 
 const raindrop = document.getElementsByClassName('raindrop');
 
-
 //setInterval(arrays, 4000);
 
 function enterNumber() {
@@ -138,7 +138,6 @@ function enterNumber() {
             setTimeout(() => {while (drop.firstChild) {
             drop.firstChild.remove()}},200);
         }   
-      
         score = count + score;
         count++;
         scoreTable.textContent = score; 
@@ -150,9 +149,11 @@ function enterNumber() {
         scoreTable.textContent = score;
     }
 }
-
-
-
+function start(){
+while(errors <=3) {
+    setInterval(arrays, 5000)
+}
+}
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
 deleteBtn.addEventListener('click', deleteNumber);
