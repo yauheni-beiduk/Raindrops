@@ -3,24 +3,23 @@ const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
-const song = document.getElementsByClassName('sound');
+//const song = document.getElementById('sound');
 const wave = document.getElementById('.wave');
 const drop = document.getElementById('drop');
 const scoreTable = document.getElementById('score-table');
-const trueSong = document.getElementsByClassName('tsoundTrue');
-const falseSong = document.getElementsByClassName('soundFalse');
+//const trueSong = document.getElementById('soundTrue');
+//const falseSong = document.getElementById('soundFalse');
 let count = 10;
 let score = 0;
-let answerCorrect = false;
 let dropsCount = 1;
 let errors = 0;
 
 
 //Play song
-
+// song.play();
 
 //RANDOM NUMBER AND OPERATOR
-function getRandomEquation() {
+function getRandomEquation(min, max) {
 
     function getRandomNumber(min, max) {
     min = Math.ceil(min);
@@ -34,9 +33,9 @@ function getRandomEquation() {
         return operator
     };
 
-    const x = getRandomNumber(0, 10);
+    const x = getRandomNumber(min,max);
     const y = getRandomOperator();
-    const z = getRandomNumber(0, 10);
+    const z = getRandomNumber(min,max);
     if (x>z) {
         return (x + y + z);
     }
@@ -96,16 +95,32 @@ function createDrop(equation, isBonus) {
 let arrayResult = [];
 
 function arrays() {
-    const equation = getRandomEquation();
+    let min,
+        max;
+    if (score <= 100) {
+    min = 0;
+    max = 10;
+    }
+    if (score > 100 && score <=350) {
+    min =0;
+    max = 20;
+    }
+    if (score > 350) {
+    min = 0;
+    max = 50;
+    }
+    const equation = getRandomEquation( min, max );
     const bonus = (dropsCount%10 === 0);
     dropsCount++;
     createDrop(equation,bonus);
     arrayResult.push({equation: eval(equation),isBonus: bonus});
+ 
 }
 
 const raindrop = document.getElementsByClassName('raindrop');
 
-// setInterval(arrays, 4000);
+
+//setInterval(arrays, 4000);
 
 function enterNumber() {
     if(arrayResult[0].equation == result.textContent) {
@@ -122,15 +137,14 @@ function enterNumber() {
             }
             setTimeout(() => {while (drop.firstChild) {
             drop.firstChild.remove()}},200);
-        }
-        trueSong.play();
+        }   
+      
         score = count + score;
         count++;
         scoreTable.textContent = score; 
-         result.textContent = '0';
+        result.textContent = '0';
     }
-    else {
-        falseSong.play();
+    else { 
         errors++; 
         score -= count;
         scoreTable.textContent = score;

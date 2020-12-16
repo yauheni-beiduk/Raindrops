@@ -121,25 +121,25 @@ body {
     position: absolute;
     width: 300%;
     height: 100%;
-    
+    box-sizing: content-box;
     background-image: url(images/wave.svg);
     background-repeat: repeat no-repeat;
     background-position: 0 bottom;
     transform-origin: center bottom;
-    background-size: 50% 20%;
+    background-size: 50% 90%;
     animation: move_wave 3s linear infinite;
 }
 
 
 @keyframes move_wave {
     0% {
-        transform: translateX(0) translateZ(0) scaleY(1)
+        transform: translateX(0) translateZ(0) scaleY(0.15)
     }
     50% {
-        transform: translateX(-25%) translateZ(0) scaleY(0.55)
+        transform: translateX(-25%) translateZ(0) scaleY(0.1)
     }
     100% {
-        transform: translateX(-50%) translateZ(0) scaleY(1)
+        transform: translateX(-50%) translateZ(0) scaleY(0.15)
     }
 }
 
