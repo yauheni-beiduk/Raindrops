@@ -137,12 +137,6 @@ function enterNumber() {
     }
 }
 
-// function stopAndStart() {
-//     while (errors < 3) {
-//     setInterval(arrays, 4000);
-// }
-
-// }
 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
