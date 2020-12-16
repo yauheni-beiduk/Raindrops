@@ -201,7 +201,7 @@ body {
     color: black;
     background-color: #85add3;
     position: absolute;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bolder;
     display: flex;
     justify-content: center;
@@ -219,4 +219,10 @@ body {
   100% {
       transform: translateY(75vh);
   }       
+}
+
+
+.boom {
+    background-image: url(images/boom.svg);
+    background-size: 65px 65px;
 }
