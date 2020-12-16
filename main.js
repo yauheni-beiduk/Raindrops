@@ -3,19 +3,20 @@ const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
-const song = document.querySelector('.sound');
+const song = document.getElementsByClassName('sound');
 const wave = document.getElementById('.wave');
 const drop = document.getElementById('drop');
 const scoreTable = document.getElementById('score-table');
-
+const trueSong = document.getElementsByClassName('tsoundTrue');
+const falseSong = document.getElementsByClassName('soundFalse');
+let count = 10;
 let score = 0;
 let answerCorrect = false;
+let dropsCount = 1;
+let errors = 0;
 
 
 //Play song
-//song.play();
-
-
 
 
 //RANDOM NUMBER AND OPERATOR
@@ -77,46 +78,29 @@ function deleteNumber() {
 
 
 
+// Create drop
 
-
-// class Drop {
-//     constructor(speed, equation=getRandomEquation(), res, color) {
-
-//     this.speed = speed;
-//     this.equation = equation;
-//     this.res = res;
-//     this.color = color;
-//     }
-//     createDrop() {
-//         const drop = document.getElementById('drop');
-//         let div = document.createElement('div');
-//         div.className = "raindrop";
-//         drop.appendChild(div);
-//         div.style.left =Math.random()*90+'%';
-//         div.append(this.equation);
-//         const x = eval(this.equation);
-//         return x;
-//     }
-// };
-
-
-
-function createDrop() {
-    const equation = getRandomEquation();
+function createDrop(equation, isBonus) {
     const drop = document.getElementById('drop');
     let div = document.createElement('div');
     div.className = "raindrop";
+    if (isBonus) {
+        div.style.backgroundColor = 'red';
+        div.style.border= '4px solid #f10c05';
+    };
     drop.appendChild(div);
-    div.style.left =Math.random()*90+'%';
+    div.style.left = Math.random()*90+'%';
     div.append(equation);
-    const x = eval(equation);
-    return x;
 }
 
-const arrayResult = [];
+let arrayResult = [];
+
 function arrays() {
-arrayResult.push(createDrop());
-return arrayResult;
+    const equation = getRandomEquation();
+    const bonus = (dropsCount%10 === 0);
+    dropsCount++;
+    createDrop(equation,bonus);
+    arrayResult.push({equation: eval(equation),isBonus: bonus});
 }
 
 const raindrop = document.getElementsByClassName('raindrop');
@@ -124,18 +108,41 @@ const raindrop = document.getElementsByClassName('raindrop');
 // setInterval(arrays, 4000);
 
 function enterNumber() {
-    if(arrayResult[0] == result.textContent) {
-    let score = 10 ;
-    score++
-    arrayResult.splice(0,1);
-    result.textContent = '0';
-    drop.firstChild.classList.add('boom');
-    drop.firstChild.remove();
-    scoreTable.textContent = score;
+    if(arrayResult[0].equation == result.textContent) {
+       if(!arrayResult[0].isBonus ) {
+            arrayResult.splice(0,1);
+            drop.firstChild.classList.add('boom');
+            setTimeout(() => drop.firstChild.remove(),200);
+     }
+        else{ 
+            count += 9;
+            arrayResult = [];
+            for (let i = 0; i < drop.childNodes.length; i++ ) {
+            drop.childNodes[i].classList.add('boom');
+            }
+            setTimeout(() => {while (drop.firstChild) {
+            drop.firstChild.remove()}},200);
+        }
+        trueSong.play();
+        score = count + score;
+        count++;
+        scoreTable.textContent = score; 
+         result.textContent = '0';
     }
-    else console.log(false);
+    else {
+        falseSong.play();
+        errors++; 
+        score -= count;
+        scoreTable.textContent = score;
+    }
 }
 
+// function stopAndStart() {
+//     while (errors < 3) {
+//     setInterval(arrays, 4000);
+// }
+
+// }
 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));

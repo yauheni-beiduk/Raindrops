@@ -121,6 +121,7 @@ body {
     position: absolute;
     width: 300%;
     height: 100%;
+    
     background-image: url(images/wave.svg);
     background-repeat: repeat no-repeat;
     background-position: 0 bottom;
@@ -128,6 +129,7 @@ body {
     background-size: 50% 20%;
     animation: move_wave 3s linear infinite;
 }
+
 
 @keyframes move_wave {
     0% {
@@ -217,12 +219,22 @@ body {
   }  
        
   100% {
-      transform: translateY(75vh);
+      transform: translateY(80vh);
   }       
 }
 
 
 .boom {
+    border: none !important;
+    border-radius: 0;
+    color: black;
+    outline: none;
+    background-color: transparent !important; 
+    font-size: 0;
+    display: block;
+    position: absolute;
+    animation: down 10s;
+    z-index: 1;
     background-image: url(images/boom.svg);
-    background-size: 65px 65px;
+    background-size: 100% 100%;
 }
