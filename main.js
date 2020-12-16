@@ -89,7 +89,7 @@ function createDrop(equation, isBonus) {
         div.style.border= '4px solid #f10c05';
     };
     drop.appendChild(div);
-    div.style.left = Math.random()*90+'%';
+    div.style.left = Math.random()*80+'%';
     div.append(equation);
 }
 
@@ -147,13 +147,15 @@ function enterNumber() {
         errors++; 
         score -= count;
         scoreTable.textContent = score;
+        if(errors == 3) {
+            alert('over');
+        }
     }
 }
-function start(){
-while(errors <=3) {
-    setInterval(arrays, 5000)
-}
-}
+
+
+
+
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
 deleteBtn.addEventListener('click', deleteNumber);
