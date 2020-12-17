@@ -56,16 +56,18 @@ function numbersClick(number) {
 };
 
 
+
+
 function resultScreen(e) { 
     if (result.textContent.length > 5) {
-      return result.textContent
+      return result.textContent;
     }
     numbersClick(e.target.textContent);
 };
 
 
 function clearScreen() {
-   return  result.textContent = '0';
+    return  result.textContent = '0';
 }
 
 
@@ -122,6 +124,8 @@ const raindrop = document.getElementsByClassName('raindrop');
 
 //setInterval(arrays, 4000);
 
+
+
 function enterNumber() {
     if(arrayResult[0].equation == result.textContent) {
        if(!arrayResult[0].isBonus ) {
@@ -147,6 +151,9 @@ function enterNumber() {
         errors++; 
         score -= count;
         scoreTable.textContent = score;
+        if (errors == 1) {
+        waveHeight.style.height = '35%';
+        }
         if(errors == 3) {
             alert('over');
         }
@@ -155,10 +162,98 @@ function enterNumber() {
 
 
 
+function keyBoard ( e ) {
+    if (result.textContent.length >= 5) {
+       return result.textContent ;
+      }
+    if ( e.which == 49 ) {
+        if (result.textContent === '0') {
+            result.textContent = '1';
+        } else {
+            result.textContent += '1';
+        };
+    };
+    if ( e.which == 50 ) {
+        if (result.textContent === '0') {
+            result.textContent = '2';
+        } else {
+            result.textContent += '2';
+        };
+    };
+    if ( e.which == 51 ) {
+        if (result.textContent === '0') {
+            result.textContent = '3';
+        } else {
+            result.textContent += '3';
+        };
+    };
+    if ( e.which == 52 ) {
+        if (result.textContent === '0') {
+            result.textContent = '4';
+        } else {
+            result.textContent += '4';
+        };
+    };
+    if ( e.which == 53 ) {
+        if (result.textContent === '0') {
+            result.textContent = '5';
+        } else {
+            result.textContent += '5';
+        };
+    };
+    if ( e.which == 54 ) {
+        if (result.textContent === '0') {
+            result.textContent = '6';
+        } else {
+            result.textContent += '6';
+        };
+    };
+    if ( e.which == 55 ) {
+        if (result.textContent === '0') {
+            result.textContent = '7';
+        } else {
+            result.textContent += '7';
+        };
+    };
+    if ( e.which == 56 ) {
+        if (result.textContent === '0') {
+            result.textContent = '8';
+        } else {
+            result.textContent += '8';
+        };
+    };
+    if ( e.which == 57 ) {
+        if (result.textContent === '0') {
+            result.textContent = '9';
+        } else {
+            result.textContent += '9';
+        };
+    };
+    if ( e.which == 48 ) {
+        if (result.textContent === '0') {
+            result.textContent = '0';
+        } else {
+            result.textContent += '0';
+        };
+    };
+    if ( e.which == 46 ) {
+        result.textContent = '0';
+    };
+    if(e.which == 8) {
+         if(result.textContent.length >= 1 ) {
+        result.textContent = result.textContent.slice(0, result.textContent.length-1);
+        }
+        result.textContent = '0';
+    }
+}
+
+
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
 deleteBtn.addEventListener('click', deleteNumber);
 enterBtn.addEventListener('click', enterNumber);
 
+
+window.addEventListener('keyup', keyBoard);
 

@@ -69,8 +69,8 @@ body {
 .one { grid-area: one; }
 .two { grid-area: two; }
 .three { grid-area: three; }
-.clear { grid-area: clear; }
-.enter { grid-area: enter; }
+.clear { grid-area: clear;}
+.enter { grid-area: enter;}
 .delete { grid-area: delete; }
 .zero { grid-area: zero; }
 
@@ -91,6 +91,8 @@ body {
     font-size: 20px;
     cursor: pointer;
 }
+
+
 
 .calc-button:hover {
     background-color: rgb(230, 216, 32);
@@ -117,7 +119,7 @@ body {
     left: 25%;
 }
 .wave-wrapper{
-    height: 15vh;
+    height: 15%;
     width: 110vh;
     bottom: 0;
     position: absolute;
@@ -204,8 +206,10 @@ body {
 
 @media screen and (min-width: 320px) and (max-width: 768px) {
 
+
 .calc-button {
-    font-size: 9px;
+    font-size: 8px;
+    font-weight: bolder;
 }
 
 .calc {
@@ -216,7 +220,7 @@ body {
 
 .score {
     height: 6%;
-    width: 100px;
+    width: 130px;
 }
 
 .star {
@@ -231,7 +235,7 @@ body {
 
 .rock {
     width: 110px;
-    top: 61%;
+    top: 63%;
 } 
 
 .result {
@@ -244,7 +248,23 @@ body {
 }
 
 .wave-wrapper {
-        height: 5vh;
+        height: 5%;
+}
+
+
+.boom {
+    border: none !important;
+    border-radius: 0;
+    color: black;
+    outline: none;
+    background-color: transparent !important; 
+    font-size: 0 !important;
+    display: block;
+    position: absolute;
+    animation: down 10s;
+    z-index: 1;
+    background-image: url(images/boom.svg);
+    background-size: 100% 100%;
 }
 
 .raindrop {
@@ -252,10 +272,10 @@ body {
     height: 25px;
     border: 2px solid #2961a7;
     font-size: 10px;
-    display: flex;
-    animation: down 10s;
     z-index: 4;
 }  
+
+
 @keyframes down {
     0% {
         transform: translateY(0%);
