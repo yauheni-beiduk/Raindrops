@@ -124,6 +124,8 @@ body {
     bottom: 0;
     position: absolute;
     background-color: transparent;
+    transition-duration: 2s;
+
 }
 .wave {
     position: absolute;

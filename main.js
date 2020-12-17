@@ -4,24 +4,33 @@ const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
 //const song = document.getElementById('sound');
-const wave = document.getElementById('.wave');
+const wave = document.getElementById('wave');
 const drop = document.getElementById('drop');
 const scoreTable = document.getElementById('score-table');
 //const trueSong = document.getElementById('soundTrue');
 //const falseSong = document.getElementById('soundFalse');
-const waveHeight = document.getElementById('.wave-wrapper');
+const waveHeight = document.getElementById('wave-wrapper');
 let count = 10;
 let score = 0;
 let dropsCount = 1;
 let errors = 0;
-
+let speed = 4000;
+let changeSpeed = speed;
+let intervalid;
+// function start (changeSpeed = 4000 ) {
+//     if (errors <=3) {
+//     setInterval(arrays, changeSpeed)}
+//     else {
+//     alert('gameover');        
+//     }
+// };
 
 //Play song
 // song.play();
 
 //RANDOM NUMBER AND OPERATOR
 function getRandomEquation(min, max) {
-
+    
     function getRandomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -117,12 +126,15 @@ function arrays() {
     dropsCount++;
     createDrop(equation,bonus);
     arrayResult.push({equation: eval(equation),isBonus: bonus});
- 
 }
 
 const raindrop = document.getElementsByClassName('raindrop');
 
 //setInterval(arrays, 4000);
+
+function startGame() {
+interValid = setInterval(arrays,4000)
+    }
 
 
 
@@ -151,14 +163,20 @@ function enterNumber() {
         errors++; 
         score -= count;
         scoreTable.textContent = score;
-        if (errors == 1) {
-        waveHeight.style.height = '35%';
+        if(errors ==1) {
+            waveHeight.style.height = '20%';
+        }
+        if(errors == 2) {
+            waveHeight.style.height = '30%';
         }
         if(errors == 3) {
-            alert('over');
+            waveHeight.style.height = '40%';
+            clearInterval(interValid);
+                alert('over');
         }
     }
 }
+
 
 
 
