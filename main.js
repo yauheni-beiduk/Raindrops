@@ -17,13 +17,6 @@ let errors = 0;
 let speed = 4000;
 let changeSpeed = speed;
 let intervalid;
-// function start (changeSpeed = 4000 ) {
-//     if (errors <=3) {
-//     setInterval(arrays, changeSpeed)}
-//     else {
-//     alert('gameover');        
-//     }
-// };
 
 //Play song
 // song.play();
@@ -59,7 +52,7 @@ function getRandomEquation(min, max) {
 function numbersClick(number) {
     if (result.textContent === '0') {
         result.textContent = number;
-    } else {
+        } else {
         result.textContent += number;
     };
 };
@@ -178,10 +171,8 @@ function enterNumber() {
 }
 
 
-
-
 function keyBoard ( e ) {
-    if (result.textContent.length >= 5) {
+    if (result.textContent.length > 5) {
        return result.textContent ;
       }
     if ( e.which == 49 ) {
@@ -255,13 +246,13 @@ function keyBoard ( e ) {
         };
     };
     if ( e.which == 46 ) {
-        result.textContent = '0';
+        clearScreen();
     };
     if(e.which == 8) {
-         if(result.textContent.length >= 1 ) {
-        result.textContent = result.textContent.slice(0, result.textContent.length-1);
-        }
-        result.textContent = '0';
+        deleteNumber() ;
+    }
+    if(e.which == 13) {
+        enterNumber() ;
     }
 }
 
@@ -274,4 +265,6 @@ enterBtn.addEventListener('click', enterNumber);
 
 
 window.addEventListener('keyup', keyBoard);
+
+// startGame();
 

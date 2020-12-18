@@ -17,11 +17,24 @@ h1 {
     margin: 0 auto;
 }
 
+#full {
+    width: 30px;
+    height: 30px;
+    border: none;
+    outline: transparent;
+    cursor: pointer;
+    background: transparent;
+    background-image: url(images/full.svg);
+    background-size: 100% 100%;
+}
+
+
 p {
     text-align: center;
     font-size: 50px; 
     color: wheat;
-    margin-top: 40px;
+    margin-top: 25px;
+    margin-bottom: auto;
 }
 
 .play{
