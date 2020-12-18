@@ -15,13 +15,28 @@ let count = 10;
 let score = 0;
 let dropsCount = 1;
 let errors = 0;
-
+const raindrop = document.getElementsByClassName('raindrop');
 
 const start = document.getElementById('start');
 const game_over = document.getElementById('game-Over');
 const gameInfo = document.getElementById('gameInfo');
+const  wrapperFirstPage = document.getElementById('wrapperFirstPage');
 
 
+
+function fullScreen(event) {
+    if (!event.target.hasAttribute('data-fullscreen')) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  }
+
+  function nextPage () {
+      wrapperFirstPage.style.display = 'none';
+      start.style.display = 'flex';
+  }
 
 //Play song
 // song.play();
@@ -62,9 +77,6 @@ function numbersClick(number) {
     };
 };
 
-
-
-
 function resultScreen(e) { 
     if (result.textContent.length > 5) {
       return result.textContent;
@@ -72,11 +84,9 @@ function resultScreen(e) {
     numbersClick(e.target.textContent);
 };
 
-
 function clearScreen() {
     return  result.textContent = '0';
 }
-
 
 function deleteNumber() {
     if(result.textContent.length > 1 ) {
@@ -99,8 +109,7 @@ function createDrop(equation, isBonus) {
     };
     drop.appendChild(div);
     div.style.left = Math.random()*80+'%';
-    div.append(equation);
-   
+    div.append(equation); 
 }
 
 let arrayResult = [];
@@ -127,7 +136,6 @@ function arrays() {
     arrayResult.push({equation: eval(equation),isBonus: bonus});
 }
 
-const raindrop = document.getElementsByClassName('raindrop');
 
 //setInterval(arrays, 4000);
 
@@ -140,8 +148,6 @@ const raindrop = document.getElementsByClassName('raindrop');
 //         delay = 100;
 //     start = setTimeout(a,delay)
 // } , delay);
-
-
 
 
 function enterNumber() {
@@ -181,7 +187,6 @@ function enterNumber() {
         }
     }
 }
-
 
 
 
@@ -275,19 +280,20 @@ function gameOver () {
     game_over.style.display ="block";
     start.style.display = 'none';
 
-    let div = document.createElement('div');
-    div.className = "raindrop";
-    if (isBonus) {
-        div.style.backgroundColor = 'red';
-        div.style.border= '4px solid #f10c05';
-    };
-    drop.appendChild(div);
-    div.style.left = Math.random()*80+'%';
-    div.append(equation);
+    // let div = document.createElement('div');
+    // div.className = "raindrop";
+    // if (isBonus) {
+    //     div.style.backgroundColor = 'red';
+    //     div.style.border= '4px solid #f10c05';
+    // };
+    // drop.appendChild(div);
+    // div.style.left = Math.random()*80+'%';
+    // div.append(equation);
    
   }
-  
 
+
+ 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
@@ -295,6 +301,7 @@ deleteBtn.addEventListener('click', deleteNumber);
 enterBtn.addEventListener('click', enterNumber);
 
 
+window.addEventListener('click', fullScreen);
 window.addEventListener('keyup', keyBoard);
 
 
