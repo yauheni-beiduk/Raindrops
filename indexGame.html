@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div id="start" class="wrapper">
         <div id="game-place" class="game-place">
             <div id="drop" class="drop"></div>
             <div><img class="rock" width="300px" height="400px" src="images/rock.svg" alt="rock"></div>
@@ -39,6 +39,10 @@
         <audio id="sound" src="sounds/dendi.mp3"></audio>
         <audio id="soundFalse" src="sounds/falseAnswer.mp3"></audio>
         <audio id="soundTrue" src="sounds/trueAnswer.mp3"></audio>
+    </div>
+    <div id="game-Over">
+        <h1 class="gameOver">GAME OVER</h1>
+        <div id="gameInfo"></div>
     </div>
     <script src="main.js"></script>
 </body>

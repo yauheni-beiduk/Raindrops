@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 body {
@@ -33,6 +34,12 @@ body {
     position: relative;
     background-color:#80f2eb;
     align-items: center;
+}
+
+
+.score-text{
+    margin-bottom: 10px;
+
 }
 
 .calc {
@@ -200,11 +207,27 @@ body {
     background-size: 100% 100%;
 }
 
+#game-Over {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to top, rgb(110, 218, 240), rgb(123, 221, 241), rgb(136, 225, 243), rgb(150, 228, 244), rgb(163, 231, 245), rgb(176, 235, 247), rgb(189, 238, 248), rgb(202, 242, 250), rgb(215, 245, 251), rgb(229, 248, 252), rgb(242, 252, 254), rgb(255, 255, 255));
+}
 
+.gameOver {
+    margin: 0;
+    text-align: center;
+    font-size: 12vh;
+    padding-top: 12vh;
+}
 
-
-
-
+#gameInfo {
+    text-align: center;
+    width: 110vh;
+    height: 50vh;
+    background-color:cornsilk;
+    margin:20px auto;
+}
 
 @media screen and (min-width: 320px) and (max-width: 768px) {
 
@@ -247,12 +270,8 @@ body {
 
 .score-text{
     font-size: 15px;
-}
 
-.wave-wrapper {
-        height: 5%;
 }
-
 
 .boom {
     border: none !important;

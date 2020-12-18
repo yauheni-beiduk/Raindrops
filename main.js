@@ -10,13 +10,18 @@ const scoreTable = document.getElementById('score-table');
 //const trueSong = document.getElementById('soundTrue');
 //const falseSong = document.getElementById('soundFalse');
 const waveHeight = document.getElementById('wave-wrapper');
+waveHeight.style.height = '15%';
 let count = 10;
 let score = 0;
 let dropsCount = 1;
 let errors = 0;
-let speed = 4000;
-let changeSpeed = speed;
-let intervalid;
+
+
+const start = document.getElementById('start');
+const game_over = document.getElementById('game-Over');
+const gameInfo = document.getElementById('gameInfo');
+
+
 
 //Play song
 // song.play();
@@ -95,6 +100,7 @@ function createDrop(equation, isBonus) {
     drop.appendChild(div);
     div.style.left = Math.random()*80+'%';
     div.append(equation);
+   
 }
 
 let arrayResult = [];
@@ -125,9 +131,16 @@ const raindrop = document.getElementsByClassName('raindrop');
 
 //setInterval(arrays, 4000);
 
-function startGame() {
-interValid = setInterval(arrays,4000)
-    }
+// let delay = 10000;
+// let start = setTimeout(function a() {
+//     arrays();
+//     if (errors = 1) {
+//         delay = 5000
+//     } else 
+//         delay = 100;
+//     start = setTimeout(a,delay)
+// } , delay);
+
 
 
 
@@ -136,7 +149,7 @@ function enterNumber() {
        if(!arrayResult[0].isBonus ) {
             arrayResult.splice(0,1);
             drop.firstChild.classList.add('boom');
-            setTimeout(() => drop.firstChild.remove(),200);
+            setTimeout(() => drop.firstChild.remove(),100);
      }
         else{ 
             count += 9;
@@ -145,7 +158,7 @@ function enterNumber() {
             drop.childNodes[i].classList.add('boom');
             }
             setTimeout(() => {while (drop.firstChild) {
-            drop.firstChild.remove()}},200);
+            drop.firstChild.remove()}},100);
         }   
         score = count + score;
         count++;
@@ -157,21 +170,22 @@ function enterNumber() {
         score -= count;
         scoreTable.textContent = score;
         if(errors ==1) {
-            waveHeight.style.height = '20%';
-        }
-        if(errors == 2) {
             waveHeight.style.height = '30%';
         }
-        if(errors == 3) {
+        if(errors == 2) {
             waveHeight.style.height = '40%';
-            clearInterval(interValid);
-                alert('over');
+        }
+        if(errors == 3) {
+            waveHeight.style.height = '60%';
+               gameOver();
         }
     }
 }
 
 
-function keyBoard ( e ) {
+
+
+function keyBoard (e) {
     if (result.textContent.length > 5) {
        return result.textContent ;
       }
@@ -257,6 +271,23 @@ function keyBoard ( e ) {
 }
 
 
+function gameOver () {
+    game_over.style.display ="block";
+    start.style.display = 'none';
+
+    let div = document.createElement('div');
+    div.className = "raindrop";
+    if (isBonus) {
+        div.style.backgroundColor = 'red';
+        div.style.border= '4px solid #f10c05';
+    };
+    drop.appendChild(div);
+    div.style.left = Math.random()*80+'%';
+    div.append(equation);
+   
+  }
+  
+
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
@@ -266,5 +297,4 @@ enterBtn.addEventListener('click', enterNumber);
 
 window.addEventListener('keyup', keyBoard);
 
-// startGame();
 

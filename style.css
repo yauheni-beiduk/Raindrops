@@ -4,12 +4,12 @@
     overflow: hidden;
 }
 
-body {
+.wrapperFirstPage{
     height: 100vh;
 background: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
 }
 
-h1 {
+.gameName {
     text-align: center;
     font-size: 80px;
     font-weight: 900;
@@ -52,7 +52,7 @@ p {
     justify-content: space-around;
 }
 
-.drop {
+.dropImgfirst {
     height: 50vh;
     background-size: 100% 100%;
     background-image: url(images/drop.svg);
@@ -62,7 +62,7 @@ p {
 
 @media screen and (min-width: 320px) and (max-width: 768px) {
 
-    h1 {
+    .gameName {
         font-size: 50px;
     }
 
