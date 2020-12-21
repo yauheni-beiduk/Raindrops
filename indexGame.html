@@ -14,7 +14,7 @@
         </p>
         <div class="dropImgfirst"></div>
         <div class="buttons">
-        <button class="play" onclick="nextPage();arrays()">Play</button>
+        <button class="play" onclick="nextPage()">Play</button>
         <button class="play" onclick="">How to play?</button>
         </div>
     </div>
@@ -53,7 +53,12 @@
     </div>
     <div id="game-Over">
         <h1 class="gameOver">GAME OVER</h1>
-        <div id="gameInfo"></div>
+        <div id="gameInfo">
+            <div class="info">TOTAL SCORE : <span id="allScore">0</span></div>
+            <div class="info">TOTAL EQUATIONS: <span  id="totalEquations">0</span></div>
+            <div class="info">TOTAL TRUE ANSWERS : <span  id="totalAnswer">0</span></div>
+        </div>
+        <button id="continue" onclick="anewGame()">Continue</button>
     </div>
     <script src="main.js"></script>
 </body>

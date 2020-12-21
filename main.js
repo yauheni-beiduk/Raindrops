@@ -3,24 +3,33 @@ const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
 const enterBtn = document.getElementById('enter');
 const result = document.getElementById('result');
-//const song = document.getElementById('sound');
+// const song = document.getElementById('sound');
 const wave = document.getElementById('wave');
 const drop = document.getElementById('drop');
 const scoreTable = document.getElementById('score-table');
-//const trueSong = document.getElementById('soundTrue');
-//const falseSong = document.getElementById('soundFalse');
+// const trueSong = document.getElementById('soundTrue');
+// const falseSong = document.getElementById('soundFalse');
 const waveHeight = document.getElementById('wave-wrapper');
-waveHeight.style.height = '15%';
 let count = 10;
 let score = 0;
 let dropsCount = 1;
 let errors = 0;
 const raindrop = document.getElementsByClassName('raindrop');
-
+let trueAnswer = 0;
 const start = document.getElementById('start');
 const game_over = document.getElementById('game-Over');
-const gameInfo = document.getElementById('gameInfo');
-const  wrapperFirstPage = document.getElementById('wrapperFirstPage');
+
+const wrapperFirstPage = document.getElementById('wrapperFirstPage');
+const allScore = document.getElementById('allScore');
+const totalEquations = document.getElementById('totalEquations');
+const totalAnswer = document.getElementById('totalAnswer');
+let arrayResult = [];
+
+
+
+
+
+
 
 
 
@@ -36,10 +45,10 @@ function fullScreen(event) {
   function nextPage () {
       wrapperFirstPage.style.display = 'none';
       start.style.display = 'flex';
-  }
+}
 
 //Play song
-// song.play();
+// song.play()
 
 //RANDOM NUMBER AND OPERATOR
 function getRandomEquation(min, max) {
@@ -99,6 +108,8 @@ function deleteNumber() {
 
 // Create drop
 
+
+
 function createDrop(equation, isBonus) {
     const drop = document.getElementById('drop');
     let div = document.createElement('div');
@@ -112,8 +123,11 @@ function createDrop(equation, isBonus) {
     div.append(equation); 
 }
 
-let arrayResult = [];
+let timerId,
+    timerIdOne,
+    timerIdTwo;
 
+// go raindrop
 function arrays() {
     let min,
         max;
@@ -133,21 +147,47 @@ function arrays() {
     const bonus = (dropsCount%10 === 0);
     dropsCount++;
     createDrop(equation,bonus);
+    if (errors == 0) {
+   timerId = setTimeout(function () {
+        arrayResult.splice(0,1);
+        drop.firstChild.classList.add('boom');
+        setTimeout(() => drop.firstChild.remove(),100)
+    }, 6800);}
+    if (errors == 1) {
+    timerIdOne = setTimeout(function () {
+            arrayResult.splice(0,1);
+            drop.firstChild.classList.add('boom');
+            setTimeout(() => drop.firstChild.remove(),100)
+        }, 5000);}
+        if (errors == 2) {
+     timerIdTwo = setTimeout(function () {
+                arrayResult.splice(0,1);
+                drop.firstChild.classList.add('boom');
+                setTimeout(() => drop.firstChild.remove(),100)
+            }, 4000);}
     arrayResult.push({equation: eval(equation),isBonus: bonus});
 }
 
 
-//setInterval(arrays, 4000);
 
-// let delay = 10000;
-// let start = setTimeout(function a() {
-//     arrays();
-//     if (errors = 1) {
-//         delay = 5000
-//     } else 
-//         delay = 100;
-//     start = setTimeout(a,delay)
-// } , delay);
+// Start game
+
+let startOne;
+let startTwo;
+let startThree;
+function startGaame () {
+    if (errors == 0) {
+    startOne = setInterval(arrays,7000);
+}
+    else if (errors == 1) {
+    startTwo = setInterval(arrays,4000);
+}
+    else {
+    startThree = setInterval(arrays,2000);
+}
+}
+
+
 
 
 function enterNumber() {
@@ -156,6 +196,8 @@ function enterNumber() {
             arrayResult.splice(0,1);
             drop.firstChild.classList.add('boom');
             setTimeout(() => drop.firstChild.remove(),100);
+            clearInterval(timerIdOne);
+            clearInterval(timerIdTwo);
      }
         else{ 
             count += 9;
@@ -170,20 +212,34 @@ function enterNumber() {
         count++;
         scoreTable.textContent = score; 
         result.textContent = '0';
+     //   trueSong.play();
+        trueAnswer++;
     }
     else { 
         errors++; 
         score -= count;
         scoreTable.textContent = score;
-        if(errors ==1) {
+     //   falseSong.play();
+        if(errors == 0) {
+            clearTimeout(timerId);
+        }
+        if(errors == 1) {
             waveHeight.style.height = '30%';
+            startGaame ();
+            clearInterval(startOne);
+            clearTimeout( timerIdOne);
+         
         }
         if(errors == 2) {
             waveHeight.style.height = '40%';
+            startGaame ();
+            clearInterval(startTwo);
+            clearTimeout(timerIdTwo);
         }
         if(errors == 3) {
             waveHeight.style.height = '60%';
-               gameOver();
+            clearInterval(startThree);
+            gameOver();
         }
     }
 }
@@ -279,21 +335,39 @@ function keyBoard (e) {
 function gameOver () {
     game_over.style.display ="block";
     start.style.display = 'none';
-
-    // let div = document.createElement('div');
-    // div.className = "raindrop";
-    // if (isBonus) {
-    //     div.style.backgroundColor = 'red';
-    //     div.style.border= '4px solid #f10c05';
-    // };
-    // drop.appendChild(div);
-    // div.style.left = Math.random()*80+'%';
-    // div.append(equation);
-   
-  }
+    allScore.textContent = score;
+    totalEquations.textContent = dropsCount - 1 ;
+    totalAnswer.textContent = trueAnswer;
+}
 
 
- 
+function anewGame() {
+    game_over.style.display ="none";
+    wrapperFirstPage.style.display = 'block';
+    location.reload();
+}
+
+
+// let autoTimer;
+// let enteredResult;
+// let autoTimerRes;
+// function autoEnterResult() {
+//     arrayResult.equation == result.textContent;
+//     setTimeout(clearScreen(), 1500);
+
+// };
+
+// function onPlayAutomatic() {
+//     startGaame();
+//     autoTimer = setTimeout(function auto() {
+//             setTimeout(autoEnterResult, 1000);
+//             let resultValue = arrayResult.equation
+//             result.textContent =  resultValue;
+//             autoTimer = setTimeout(auto, 5000);
+    
+//     }, 3500);
+// };
+
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
 clearBtn.addEventListener('click', clearScreen);
@@ -303,5 +377,6 @@ enterBtn.addEventListener('click', enterNumber);
 
 window.addEventListener('click', fullScreen);
 window.addEventListener('keyup', keyBoard);
+
 
 
