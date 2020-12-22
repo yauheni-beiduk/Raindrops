@@ -108,12 +108,13 @@ function deleteNumber() {
 
 // Create drop
 
+let id=0;
 
-
-function createDrop(equation, isBonus) {
+function createDrop(equation,id, isBonus) {
     const drop = document.getElementById('drop');
     let div = document.createElement('div');
     div.className = "raindrop";
+    div.id = id;
     if (isBonus) {
         div.style.backgroundColor = 'red';
         div.style.border= '4px solid #f10c05';
@@ -123,12 +124,13 @@ function createDrop(equation, isBonus) {
     div.append(equation); 
 }
 
-let timerId,
-    timerIdOne,
-    timerIdTwo;
+let timerId;
+
 
 // go raindrop
 function arrays() {
+    ++id;
+    const currentId = id;
     let min,
         max;
     if (score <= 100) {
@@ -146,25 +148,37 @@ function arrays() {
     const equation = getRandomEquation( min, max );
     const bonus = (dropsCount%10 === 0);
     dropsCount++;
-    createDrop(equation,bonus);
+    createDrop(equation,currentId, bonus);
+    
+    function removeDrop() {
+    const element = document.getElementById(currentId);
+    if(element) { 
+    element.classList.add('boom');
+    setTimeout(() => element.remove(),100)
+    arrayResult.splice(0,1);
+    }} ;
     if (errors == 0) {
-   timerId = setTimeout(function () {
-        arrayResult.splice(0,1);
-        drop.firstChild.classList.add('boom');
-        setTimeout(() => drop.firstChild.remove(),100)
-    }, 6800);};
+        console.log('1');
+    setTimeout(function () {
+      removeDrop();
+            errors++;
+            waveHeight.style.height = '30%';
+    }  ,  6800);}
+    
     if (errors == 1) {
-    timerIdOne = setTimeout(function () {
-            arrayResult.splice(0,1);
-            drop.firstChild.classList.add('boom');
-            setTimeout(() => drop.firstChild.remove(),100)
-        }, 5000);};
+        console.log('2');
+    setTimeout(function () {
+        removeDrop();
+        errors++;
+        waveHeight.style.height = '40%';
+    }, 5000);};
         if (errors == 2) {
-     timerIdTwo = setTimeout(function () {
-                arrayResult.splice(0,1);
-                drop.firstChild.classList.add('boom');
-                setTimeout(() => drop.firstChild.remove(),100)
-            }, 4000);};          
+            console.log('3');
+      setTimeout(function () {
+        removeDrop();
+        errors++;
+        waveHeight.style.height = '60%';
+    }, 4000);};          
     arrayResult.push({equation: eval(equation),isBonus: bonus});
 }
 
@@ -173,17 +187,16 @@ function arrays() {
 // Start game
 
 let startOne;
-let startTwo;
-let startThree;
-function startGaame () {
+function startGaame() {
     if (errors == 0) {
+     
     startOne = setInterval(arrays,7000);
 }
     else if (errors == 1) {
-    startTwo = setInterval(arrays,5000);
+    startOne = setInterval(arrays,4000);
 }
     else {
-    startThree = setInterval(arrays,3000);
+    startOne = setInterval(arrays,2000);
 }
 }
 
@@ -196,8 +209,7 @@ function enterNumber() {
             arrayResult.splice(0,1);
             drop.firstChild.classList.add('boom');
             setTimeout(() => drop.firstChild.remove(),100);
-            clearInterval(timerIdOne);
-            clearInterval(timerIdTwo);
+ 
      }
         else{ 
             count += 9;
@@ -220,25 +232,24 @@ function enterNumber() {
         score -= count;
         scoreTable.textContent = score;
      //   falseSong.play();
-        if(errors == 0) {
-            clearTimeout(timerId);
-        }
+        // if(errors == 0) {
+        //     clearTimeout(timerId);
+        // }
         if(errors == 1) {
             waveHeight.style.height = '30%';
-            startGaame ();
             clearInterval(startOne);
-            clearTimeout( timerIdOne);
-         
+      
+            startGaame();
         }
         if(errors == 2) {
             waveHeight.style.height = '40%';
-            startGaame ();
-            clearTimeout(timerIdTwo);     
-            clearInterval(startTwo);
+               
+           clearInterval(startOne);
+            startGaame();
         }
         if(errors == 3) {
             waveHeight.style.height = '60%';
-            clearInterval(startThree);
+            clearInterval(startOne);
             gameOver();
         }
     }
@@ -357,14 +368,15 @@ let autoTimerRes;
 function autoEnterResult() {
     arrayResult[0].equation == result.textContent;
     console.log(arrayResult[0].equation)
-    setTimeout(clearScreen(), 1500);
+    setTimeout(clearScreen, 1500);
 };
-
 function onPlayAutomatic() {
     startGaame();
-    autoTimer = setTimeout(function auto() {
-       autoTimerRes = setTimeout(autoEnterResult, 1000);
-            autoTimer = setTimeout(auto, 6000);
+   setTimeout(function auto() {
+        result.textContent = arrayResult[0].equation;
+        enterNumber();
+       setTimeout(autoEnterResult, 1000);
+       setTimeout(auto, 6000);
                 
     // const event = new KeyboardEvent("keypress", {
     //     view: window,
@@ -374,7 +386,8 @@ function onPlayAutomatic() {
     //   });
       
     //   document.getElementById("result").dispatchEvent(event);
-    return result.textContent = arrayResult[0].equation;
+    //  result.textContent = arrayResult[0].equation;
+    //  enterNumber();
     }, 4000);
     
 };
