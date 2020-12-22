@@ -152,19 +152,19 @@ function arrays() {
         arrayResult.splice(0,1);
         drop.firstChild.classList.add('boom');
         setTimeout(() => drop.firstChild.remove(),100)
-    }, 6800);}
+    }, 6800);};
     if (errors == 1) {
     timerIdOne = setTimeout(function () {
             arrayResult.splice(0,1);
             drop.firstChild.classList.add('boom');
             setTimeout(() => drop.firstChild.remove(),100)
-        }, 5000);}
+        }, 5000);};
         if (errors == 2) {
      timerIdTwo = setTimeout(function () {
                 arrayResult.splice(0,1);
                 drop.firstChild.classList.add('boom');
                 setTimeout(() => drop.firstChild.remove(),100)
-            }, 4000);}
+            }, 4000);};          
     arrayResult.push({equation: eval(equation),isBonus: bonus});
 }
 
@@ -180,10 +180,10 @@ function startGaame () {
     startOne = setInterval(arrays,7000);
 }
     else if (errors == 1) {
-    startTwo = setInterval(arrays,4000);
+    startTwo = setInterval(arrays,5000);
 }
     else {
-    startThree = setInterval(arrays,2000);
+    startThree = setInterval(arrays,3000);
 }
 }
 
@@ -233,8 +233,8 @@ function enterNumber() {
         if(errors == 2) {
             waveHeight.style.height = '40%';
             startGaame ();
+            clearTimeout(timerIdTwo);     
             clearInterval(startTwo);
-            clearTimeout(timerIdTwo);
         }
         if(errors == 3) {
             waveHeight.style.height = '60%';
@@ -348,25 +348,36 @@ function anewGame() {
 }
 
 
-// let autoTimer;
-// let enteredResult;
-// let autoTimerRes;
-// function autoEnterResult() {
-//     arrayResult.equation == result.textContent;
-//     setTimeout(clearScreen(), 1500);
 
-// };
 
-// function onPlayAutomatic() {
-//     startGaame();
-//     autoTimer = setTimeout(function auto() {
-//             setTimeout(autoEnterResult, 1000);
-//             let resultValue = arrayResult.equation
-//             result.textContent =  resultValue;
-//             autoTimer = setTimeout(auto, 5000);
+
+let resultValue
+let autoTimer;
+let autoTimerRes;
+function autoEnterResult() {
+    arrayResult[0].equation == result.textContent;
+    console.log(arrayResult[0].equation)
+    setTimeout(clearScreen(), 1500);
+};
+
+function onPlayAutomatic() {
+    startGaame();
+    autoTimer = setTimeout(function auto() {
+       autoTimerRes = setTimeout(autoEnterResult, 1000);
+            autoTimer = setTimeout(auto, 6000);
+                
+    // const event = new KeyboardEvent("keypress", {
+    //     view: window,
+    //     keyCode: 13,
+    //     bubbles: true,
+    //     cancelable: true
+    //   });
+      
+    //   document.getElementById("result").dispatchEvent(event);
+    return result.textContent = arrayResult[0].equation;
+    }, 4000);
     
-//     }, 3500);
-// };
+};
 
 
 numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
