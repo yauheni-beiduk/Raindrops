@@ -1,406 +1,377 @@
-const numbersBtn = document.querySelectorAll('.calc-button-numbers');
-const clearBtn = document.getElementById('clear');
-const deleteBtn = document.getElementById('delete');
-const enterBtn = document.getElementById('enter');
-const result = document.getElementById('result');
-// const song = document.getElementById('sound');
-const wave = document.getElementById('wave');
-const drop = document.getElementById('drop');
-const scoreTable = document.getElementById('score-table');
-// const trueSong = document.getElementById('soundTrue');
-// const falseSong = document.getElementById('soundFalse');
-const waveHeight = document.getElementById('wave-wrapper');
+const numbersBtn = document.querySelectorAll(".calc-button-numbers");
+const clearBtn = document.getElementById("clear");
+const deleteBtn = document.getElementById("delete");
+const enterBtn = document.getElementById("enter");
+const result = document.getElementById("result");
+const song = document.getElementById("sound");
+const wave = document.getElementById("wave");
+const drop = document.getElementById("drop");
+const scoreTable = document.getElementById("score-table");
+const trueSong = document.getElementById("soundTrue");
+const falseSong = document.getElementById("soundFalse");
+const start = document.getElementById("start");
+const game_over = document.getElementById("game-Over");
+const wrapperFirstPage = document.getElementById("wrapperFirstPage");
+const allScore = document.getElementById("allScore");
+const totalEquations = document.getElementById("totalEquations");
+const totalAnswer = document.getElementById("totalAnswer");
+const waveHeight = document.getElementById("wave-wrapper");
+const raindrop = document.getElementsByClassName("raindrop");
+
 let count = 10;
 let score = 0;
 let dropsCount = 1;
 let errors = 0;
-const raindrop = document.getElementsByClassName('raindrop');
 let trueAnswer = 0;
-const start = document.getElementById('start');
-const game_over = document.getElementById('game-Over');
-
-const wrapperFirstPage = document.getElementById('wrapperFirstPage');
-const allScore = document.getElementById('allScore');
-const totalEquations = document.getElementById('totalEquations');
-const totalAnswer = document.getElementById('totalAnswer');
 let arrayResult = [];
+let startOne;
+let id = 0;
 
-
-
-
-
-
-
-
-
-function fullScreen(event) {
-    if (!event.target.hasAttribute('data-fullscreen')) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      document.documentElement.requestFullscreen();
-    }
+function addFullScreen(event) {
+  if (!event.target.hasAttribute("data-fullscreen")) return;
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else {
+    document.documentElement.requestFullscreen();
   }
+}
 
-  function nextPage () {
-      wrapperFirstPage.style.display = 'none';
-      start.style.display = 'flex';
+function goNextPage() {
+  wrapperFirstPage.style.display = "none";
+  start.style.display = "flex";
 }
 
 //Play song
-// song.play()
+song.play();
 
 //RANDOM NUMBER AND OPERATOR
+
 function getRandomEquation(min, max) {
-    
-    function getRandomNumber(min, max) {
+  function getRandomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; 
-    };
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-    function getRandomOperator(){
-        var operators = Array('+','-','*');
-        var operator = operators[Math.floor(Math.random()*operators.length)];
-        return operator
-    };
+  function getRandomOperator() {
+    var operators = Array("+", "-", "*");
+    var operator = operators[Math.floor(Math.random() * operators.length)];
+    return operator;
+  }
 
-    const x = getRandomNumber(min,max);
-    const y = getRandomOperator();
-    const z = getRandomNumber(min,max);
-    if (x>z) {
-        return (x + y + z);
-    }
-        return (z + y + x);
+  const x = getRandomNumber(min, max);
+  const y = getRandomOperator();
+  const z = getRandomNumber(min, max);
+  if (x > z) {
+    return x + y + z;
+  }
+  return z + y + x;
 }
-
-
 
 // CLICK CALCULATOR
 
 function numbersClick(number) {
-    if (result.textContent === '0') {
-        result.textContent = number;
-        } else {
-        result.textContent += number;
-    };
-};
+  if (result.textContent === "0") {
+    result.textContent = number;
+  } else {
+    result.textContent += number;
+  }
+}
 
-function resultScreen(e) { 
-    if (result.textContent.length > 5) {
-      return result.textContent;
-    }
-    numbersClick(e.target.textContent);
-};
+function resultScreen(e) {
+  if (result.textContent.length > 5) {
+    return result.textContent;
+  }
+  numbersClick(e.target.textContent);
+}
 
 function clearScreen() {
-    return  result.textContent = '0';
+  return (result.textContent = "0");
 }
 
 function deleteNumber() {
-    if(result.textContent.length > 1 ) {
-    return result.textContent = result.textContent.slice(0, result.textContent.length-1);
-    }
-    return  result.textContent = '0';
+  if (result.textContent.length > 1) {
+    return (result.textContent = result.textContent.slice(
+      0,
+      result.textContent.length - 1
+    ));
+  }
+  return (result.textContent = "0");
 }
 
+// CREATE DROP
 
-
-// Create drop
-
-let id=0;
-
-function createDrop(equation,id, isBonus) {
-    const drop = document.getElementById('drop');
-    let div = document.createElement('div');
-    div.className = "raindrop";
-    div.id = id;
-    if (isBonus) {
-        div.style.backgroundColor = 'red';
-        div.style.border= '4px solid #f10c05';
-    };
-    drop.appendChild(div);
-    div.style.left = Math.random()*80+'%';
-    div.append(equation); 
+function createDrop(equation, id, isBonus) {
+  const drop = document.getElementById("drop");
+  let div = document.createElement("div");
+  div.className = "raindrop";
+  div.id = id;
+  if (isBonus) {
+    div.style.backgroundColor = "red";
+    div.style.border = "4px solid #f10c05";
+  }
+  drop.appendChild(div);
+  div.style.left = Math.random() * 80 + "%";
+  div.append(equation);
 }
 
-let timerId;
-
-
-// go raindrop
-function arrays() {
-    ++id;
-    const currentId = id;
-    let min,
-        max;
-    if (score <= 100) {
+// GO RAINDROP
+let timer;
+function goDrop() {
+  let up;
+  ++id;
+  const currentId = id;
+  let min, max;
+  if (score <= 150) {
     min = 0;
     max = 10;
-    }
-    if (score > 100 && score <=350) {
-    min =0;
-    max = 20;
-    }
-    if (score > 350) {
+  }
+  if (score > 150 && score <= 450) {
     min = 0;
-    max = 50;
-    }
-    const equation = getRandomEquation( min, max );
-    const bonus = (dropsCount%10 === 0);
-    dropsCount++;
-    createDrop(equation,currentId, bonus);
-    
-    function removeDrop() {
+    max = 12;
+  }
+  if (score > 450) {
+    min = 0;
+    max = 15;
+  }
+  const equation = getRandomEquation(min, max);
+  const bonus = dropsCount % 10 === 0;
+  dropsCount++;
+  createDrop(equation, currentId, bonus);
+
+  function removeDrop() {
     const element = document.getElementById(currentId);
-    if(element) { 
-    element.classList.add('boom');
-    setTimeout(() => element.remove(),100)
-    arrayResult.splice(0,1);
-    }} ;
-    if (errors == 0) {
-        console.log('1');
-    setTimeout(function () {
+    if (element) {
+      element.classList.add("boom");
+      setTimeout(() => element.remove(), 100);
+      arrayResult.splice(0, 1);
+      waveHeight.style.height = up;
+      errors++;
+      score -= count;
+      scoreTable.textContent = score;
+      falseSong.play();
+    }
+  }
+  if (errors == 0) {
+    //   console.log("0");
+    setTimeout(() => {
+      up = "40%";
       removeDrop();
-            errors++;
-            waveHeight.style.height = '30%';
-    }  ,  6800);}
-    
-    if (errors == 1) {
-        console.log('2');
-    setTimeout(function () {
-        removeDrop();
-        errors++;
-        waveHeight.style.height = '40%';
-    }, 5000);};
-        if (errors == 2) {
-            console.log('3');
-      setTimeout(function () {
-        removeDrop();
-        errors++;
-        waveHeight.style.height = '60%';
-    }, 4000);};          
-    arrayResult.push({equation: eval(equation),isBonus: bonus});
+    }, 6800);
+  }
+  if (errors == 1) {
+    //   console.log("1");
+    setTimeout(() => {
+      up = "60%";
+      removeDrop();
+    }, 5000);
+  }
+
+  if (errors == 2) {
+    //   console.log("2");
+   timer = setTimeout(() => {
+      up = "60%";
+      removeDrop();
+    }, 4000);
+  }
+  if (errors == 3) {
+    //   console.log("3");
+  // timer = setTimeout(() => {
+  //     removeDrop();
+  //   }, 500);
+    gameOver();
+  }
+  arrayResult.push({ equation: eval(equation), isBonus: bonus });
 }
 
+// START GAME
 
-
-// Start game
-
-let startOne;
-function startGaame() {
-    if (errors == 0) {
-     
-    startOne = setInterval(arrays,7000);
-}
-    else if (errors == 1) {
-    startOne = setInterval(arrays,4000);
-}
-    else {
-    startOne = setInterval(arrays,2000);
-}
+function startGame() {
+  if (errors == 0) {
+    setTimeout(goDrop, 1500);
+    startOne = setInterval(goDrop, 7000);
+  } else if (errors == 1) {
+    startOne = setInterval(goDrop, 4000);
+  } else if (errors == 2){
+    startOne = setInterval(goDrop, 2000);
+  }
 }
 
-
-
+// CHECK THE RESULT (TRUE OR FALSE)
 
 function enterNumber() {
-    if(arrayResult[0].equation == result.textContent) {
-       if(!arrayResult[0].isBonus ) {
-            arrayResult.splice(0,1);
-            drop.firstChild.classList.add('boom');
-            setTimeout(() => drop.firstChild.remove(),100);
- 
-     }
-        else{ 
-            count += 9;
-            arrayResult = [];
-            for (let i = 0; i < drop.childNodes.length; i++ ) {
-            drop.childNodes[i].classList.add('boom');
-            }
-            setTimeout(() => {while (drop.firstChild) {
-            drop.firstChild.remove()}},100);
-        }   
-        score = count + score;
-        count++;
-        scoreTable.textContent = score; 
-        result.textContent = '0';
-     //   trueSong.play();
-        trueAnswer++;
-    }
-    else { 
-        errors++; 
-        score -= count;
-        scoreTable.textContent = score;
-     //   falseSong.play();
-        // if(errors == 0) {
-        //     clearTimeout(timerId);
-        // }
-        if(errors == 1) {
-            waveHeight.style.height = '30%';
-            clearInterval(startOne);
-      
-            startGaame();
-        }
-        if(errors == 2) {
-            waveHeight.style.height = '40%';
-               
-           clearInterval(startOne);
-            startGaame();
-        }
-        if(errors == 3) {
-            waveHeight.style.height = '60%';
-            clearInterval(startOne);
-            gameOver();
-        }
-    }
-}
-
-
-
-function keyBoard (e) {
-    if (result.textContent.length > 5) {
-       return result.textContent ;
+  if (arrayResult[0].equation == result.textContent) {
+    if (!arrayResult[0].isBonus) {
+      arrayResult.splice(0, 1);
+      drop.firstChild.classList.add("boom");
+      setTimeout(() => drop.firstChild.remove(), 100);
+    } else {
+      count += 9;
+      arrayResult = [];
+      for (let i = 0; i < drop.childNodes.length; i++) {
+        drop.childNodes[i].classList.add("boom");
       }
-    if ( e.which == 49 ) {
-        if (result.textContent === '0') {
-            result.textContent = '1';
-        } else {
-            result.textContent += '1';
-        };
-    };
-    if ( e.which == 50 ) {
-        if (result.textContent === '0') {
-            result.textContent = '2';
-        } else {
-            result.textContent += '2';
-        };
-    };
-    if ( e.which == 51 ) {
-        if (result.textContent === '0') {
-            result.textContent = '3';
-        } else {
-            result.textContent += '3';
-        };
-    };
-    if ( e.which == 52 ) {
-        if (result.textContent === '0') {
-            result.textContent = '4';
-        } else {
-            result.textContent += '4';
-        };
-    };
-    if ( e.which == 53 ) {
-        if (result.textContent === '0') {
-            result.textContent = '5';
-        } else {
-            result.textContent += '5';
-        };
-    };
-    if ( e.which == 54 ) {
-        if (result.textContent === '0') {
-            result.textContent = '6';
-        } else {
-            result.textContent += '6';
-        };
-    };
-    if ( e.which == 55 ) {
-        if (result.textContent === '0') {
-            result.textContent = '7';
-        } else {
-            result.textContent += '7';
-        };
-    };
-    if ( e.which == 56 ) {
-        if (result.textContent === '0') {
-            result.textContent = '8';
-        } else {
-            result.textContent += '8';
-        };
-    };
-    if ( e.which == 57 ) {
-        if (result.textContent === '0') {
-            result.textContent = '9';
-        } else {
-            result.textContent += '9';
-        };
-    };
-    if ( e.which == 48 ) {
-        if (result.textContent === '0') {
-            result.textContent = '0';
-        } else {
-            result.textContent += '0';
-        };
-    };
-    if ( e.which == 46 ) {
-        clearScreen();
-    };
-    if(e.which == 8) {
-        deleteNumber() ;
+      setTimeout(() => {
+        while (drop.firstChild) {
+          drop.firstChild.remove();
+        }
+      }, 100);
     }
-    if(e.which == 13) {
-        enterNumber() ;
+    score = count + score;
+    count++;
+    scoreTable.textContent = score;
+    result.textContent = "0";
+    trueSong.play();
+    trueAnswer++;
+  } else {
+    errors++;
+    score -= count;
+    scoreTable.textContent = score;
+    falseSong.play();
+    if (errors == 0) {
+      waveHeight.style.height = "20%";
     }
+    if (errors == 1) {
+      waveHeight.style.height = "40%";
+      clearInterval(startOne);
+      startGame();
+    }
+    if (errors == 2) {
+      waveHeight.style.height = "60%";
+      clearInterval(startOne);
+      startGame();
+    }
+    if (errors == 3) {
+      clearInterval(startOne);
+      clearTimeout(timer);
+      gameOver();
+    }
+  }
 }
 
+// ADD ENTER FROM KEYBOARD
 
-function gameOver () {
-    game_over.style.display ="block";
-    start.style.display = 'none';
+function addKeyBoard(e) {
+  if (result.textContent.length > 5) {
+    return result.textContent;
+  }
+  if (e.which == 49) {
+    if (result.textContent === "0") {
+      result.textContent = "1";
+    } else {
+      result.textContent += "1";
+    }
+  }
+  if (e.which == 50) {
+    if (result.textContent === "0") {
+      result.textContent = "2";
+    } else {
+      result.textContent += "2";
+    }
+  }
+  if (e.which == 51) {
+    if (result.textContent === "0") {
+      result.textContent = "3";
+    } else {
+      result.textContent += "3";
+    }
+  }
+  if (e.which == 52) {
+    if (result.textContent === "0") {
+      result.textContent = "4";
+    } else {
+      result.textContent += "4";
+    }
+  }
+  if (e.which == 53) {
+    if (result.textContent === "0") {
+      result.textContent = "5";
+    } else {
+      result.textContent += "5";
+    }
+  }
+  if (e.which == 54) {
+    if (result.textContent === "0") {
+      result.textContent = "6";
+    } else {
+      result.textContent += "6";
+    }
+  }
+  if (e.which == 55) {
+    if (result.textContent === "0") {
+      result.textContent = "7";
+    } else {
+      result.textContent += "7";
+    }
+  }
+  if (e.which == 56) {
+    if (result.textContent === "0") {
+      result.textContent = "8";
+    } else {
+      result.textContent += "8";
+    }
+  }
+  if (e.which == 57) {
+    if (result.textContent === "0") {
+      result.textContent = "9";
+    } else {
+      result.textContent += "9";
+    }
+  }
+  if (e.which == 48) {
+    if (result.textContent === "0") {
+      result.textContent = "0";
+    } else {
+      result.textContent += "0";
+    }
+  }
+  if (e.which == 46) {
+    clearScreen();
+  }
+  if (e.which == 8) {
+    deleteNumber();
+  }
+  if (e.which == 13) {
+    enterNumber();
+  }
+}
+
+function gameOver() {
+  setTimeout(() => {
+    game_over.style.display = "block";
+    start.style.display = "none";
     allScore.textContent = score;
-    totalEquations.textContent = dropsCount - 1 ;
+    totalEquations.textContent = dropsCount - 1;
     totalAnswer.textContent = trueAnswer;
+  }, 2000);
 }
-
 
 function anewGame() {
-    game_over.style.display ="none";
-    wrapperFirstPage.style.display = 'block';
-    location.reload();
+  game_over.style.display = "none";
+  wrapperFirstPage.style.display = "block";
+  location.reload();
 }
 
+// AUTO PLAY GAME
 
-
-
-
-let resultValue
-let autoTimer;
-let autoTimerRes;
 function autoEnterResult() {
-    arrayResult[0].equation == result.textContent;
-    console.log(arrayResult[0].equation)
-    setTimeout(clearScreen, 1500);
-};
-function onPlayAutomatic() {
-    startGaame();
-   setTimeout(function auto() {
-        result.textContent = arrayResult[0].equation;
-        enterNumber();
-       setTimeout(autoEnterResult, 1000);
-       setTimeout(auto, 6000);
-                
-    // const event = new KeyboardEvent("keypress", {
-    //     view: window,
-    //     keyCode: 13,
-    //     bubbles: true,
-    //     cancelable: true
-    //   });
-      
-    //   document.getElementById("result").dispatchEvent(event);
-    //  result.textContent = arrayResult[0].equation;
-    //  enterNumber();
-    }, 4000);
-    
-};
+  result.textContent = arrayResult[0].equation;
+  setTimeout(clearScreen, 1000);
+}
 
+function onAutoPlay() {
+  startGame();
+  setTimeout(function autoPlay() {
+    result.textContent == arrayResult[0].equation;
+    enterNumber();
+    setTimeout(autoEnterResult, 1500);
+    setTimeout(autoPlay, 2000);
+  }, 2500);
+}
 
-numbersBtn.forEach(number => number.addEventListener('click',  resultScreen ));
-clearBtn.addEventListener('click', clearScreen);
-deleteBtn.addEventListener('click', deleteNumber);
-enterBtn.addEventListener('click', enterNumber);
-
-
-window.addEventListener('click', fullScreen);
-window.addEventListener('keyup', keyBoard);
-
-
-
+numbersBtn.forEach((number) => number.addEventListener("click", resultScreen));
+clearBtn.addEventListener("click", clearScreen);
+deleteBtn.addEventListener("click", deleteNumber);
+enterBtn.addEventListener("click", enterNumber);
+window.addEventListener("click", addFullScreen);
+window.addEventListener("keyup", addKeyBoard);
