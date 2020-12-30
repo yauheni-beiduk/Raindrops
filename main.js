@@ -28,7 +28,6 @@ let startOne;
 let id = 0;
 let timer;
 
-
 function addFullScreen(event) {
   if (!event.target.hasAttribute("data-fullscreen")) return;
   if (document.fullscreenElement) {
@@ -45,7 +44,6 @@ function goNextPage() {
 
 //Play song
 song.play();
-
 
 //RANDOM NUMBER AND OPERATOR
 
@@ -151,9 +149,9 @@ function goDrop() {
       waveHeight.style.height = up;
       errors++;
       score -= count;
-      if ( score <= 0 ) {
+      if (score <= 0) {
         score = 0;
-        };
+      }
       scoreTable.textContent = score;
       falseSong.play();
     }
@@ -173,7 +171,7 @@ function goDrop() {
     startGame();
   }
   if (errors == 2) {
-   timer = setTimeout(() => {
+    timer = setTimeout(() => {
       up = "40%";
       removeDrop();
     }, 4000);
@@ -196,7 +194,7 @@ function startGame() {
     startOne = setInterval(goDrop, 7000);
   } else if (errors == 1) {
     startOne = setInterval(goDrop, 4000);
-  } else if (errors == 2){
+  } else if (errors == 2) {
     startOne = setInterval(goDrop, 2000);
   }
 }
@@ -212,7 +210,7 @@ function enterNumber() {
     } else {
       count += 9;
       arrayResult = [];
-      for (let i = 0; i < drop.childNodes.length; i++) {             
+      for (let i = 0; i < drop.childNodes.length; i++) {
         drop.childNodes[i].classList.add("boom");
       }
       setTimeout(() => {
@@ -227,9 +225,9 @@ function enterNumber() {
     result.textContent = "0";
     trueSong.play();
     trueAnswer++;
-   } else {
-     falseSong.play();
-   }
+  } else {
+    falseSong.play();
+  }
 }
 
 // ADD ENTER FROM KEYBOARD
@@ -341,15 +339,15 @@ function anewGame() {
 // AUTO PLAY GAME
 
 function autoEnterResult() {
-  if(arrayResult[0]){
-    if(dropsCount%6 == 0) {
+  if (arrayResult[0]) {
+    if (dropsCount % 6 == 0) {
       result.textContent = 122;
       setTimeout(clearScreen, 3000);
+    } else {
+      result.textContent = arrayResult[0].equation;
+      setTimeout(clearScreen, 1000);
     }
-    else {
-  result.textContent = arrayResult[0].equation;
-  setTimeout(clearScreen, 1000);
-}}
+  }
 }
 
 function onAutoPlay() {
@@ -357,8 +355,8 @@ function onAutoPlay() {
   setTimeout(function autoPlay() {
     setTimeout(autoEnterResult, 4500);
     if (arrayResult[0]) {
-    enterNumber();
-    };
+      enterNumber();
+    }
     setTimeout(autoPlay, 5000);
   }, 2500);
 }
