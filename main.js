@@ -26,6 +26,8 @@ let trueAnswer = 0;
 let arrayResult = [];
 let startOne;
 let id = 0;
+let timer;
+
 
 function addFullScreen(event) {
   if (!event.target.hasAttribute("data-fullscreen")) return;
@@ -43,6 +45,7 @@ function goNextPage() {
 
 //Play song
 song.play();
+
 
 //RANDOM NUMBER AND OPERATOR
 
@@ -116,7 +119,7 @@ function createDrop(equation, id, isBonus) {
 }
 
 // GO RAINDROP
-let timer;
+
 function goDrop() {
   let up;
   ++id;
@@ -148,37 +151,38 @@ function goDrop() {
       waveHeight.style.height = up;
       errors++;
       score -= count;
+      if ( score <= 0 ) {
+        score = 0;
+        };
       scoreTable.textContent = score;
       falseSong.play();
     }
   }
   if (errors == 0) {
-    //   console.log("0");
     setTimeout(() => {
-      up = "40%";
+      up = "20%";
       removeDrop();
     }, 6800);
   }
   if (errors == 1) {
-    //   console.log("1");
     setTimeout(() => {
-      up = "60%";
+      up = "30%";
       removeDrop();
     }, 5000);
+    clearInterval(startOne);
+    startGame();
   }
-
   if (errors == 2) {
-    //   console.log("2");
    timer = setTimeout(() => {
-      up = "60%";
+      up = "40%";
       removeDrop();
     }, 4000);
+    clearInterval(startOne);
+    startGame();
   }
   if (errors == 3) {
-    //   console.log("3");
-  // timer = setTimeout(() => {
-  //     removeDrop();
-  //   }, 500);
+    clearInterval(startOne);
+    clearTimeout(timer);
     gameOver();
   }
   arrayResult.push({ equation: eval(equation), isBonus: bonus });
@@ -208,7 +212,7 @@ function enterNumber() {
     } else {
       count += 9;
       arrayResult = [];
-      for (let i = 0; i < drop.childNodes.length; i++) {
+      for (let i = 0; i < drop.childNodes.length; i++) {             
         drop.childNodes[i].classList.add("boom");
       }
       setTimeout(() => {
@@ -223,30 +227,9 @@ function enterNumber() {
     result.textContent = "0";
     trueSong.play();
     trueAnswer++;
-  } else {
-    errors++;
-    score -= count;
-    scoreTable.textContent = score;
-    falseSong.play();
-    if (errors == 0) {
-      waveHeight.style.height = "20%";
-    }
-    if (errors == 1) {
-      waveHeight.style.height = "40%";
-      clearInterval(startOne);
-      startGame();
-    }
-    if (errors == 2) {
-      waveHeight.style.height = "60%";
-      clearInterval(startOne);
-      startGame();
-    }
-    if (errors == 3) {
-      clearInterval(startOne);
-      clearTimeout(timer);
-      gameOver();
-    }
-  }
+   } else {
+     falseSong.play();
+   }
 }
 
 // ADD ENTER FROM KEYBOARD
@@ -255,71 +238,72 @@ function addKeyBoard(e) {
   if (result.textContent.length > 5) {
     return result.textContent;
   }
+  const zero = result.textContent === "0";
   if (e.which == 49) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "1";
     } else {
       result.textContent += "1";
     }
   }
   if (e.which == 50) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "2";
     } else {
       result.textContent += "2";
     }
   }
   if (e.which == 51) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "3";
     } else {
       result.textContent += "3";
     }
   }
   if (e.which == 52) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "4";
     } else {
       result.textContent += "4";
     }
   }
   if (e.which == 53) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "5";
     } else {
       result.textContent += "5";
     }
   }
   if (e.which == 54) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "6";
     } else {
       result.textContent += "6";
     }
   }
   if (e.which == 55) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "7";
     } else {
       result.textContent += "7";
     }
   }
   if (e.which == 56) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "8";
     } else {
       result.textContent += "8";
     }
   }
   if (e.which == 57) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "9";
     } else {
       result.textContent += "9";
     }
   }
   if (e.which == 48) {
-    if (result.textContent === "0") {
+    if (zero) {
       result.textContent = "0";
     } else {
       result.textContent += "0";
@@ -337,13 +321,15 @@ function addKeyBoard(e) {
 }
 
 function gameOver() {
+  clearInterval(startOne);
+  clearTimeout(timer);
   setTimeout(() => {
     game_over.style.display = "block";
     start.style.display = "none";
     allScore.textContent = score;
-    totalEquations.textContent = dropsCount - 1;
+    totalEquations.textContent = dropsCount - 2;
     totalAnswer.textContent = trueAnswer;
-  }, 2000);
+  }, 100);
 }
 
 function anewGame() {
@@ -355,17 +341,25 @@ function anewGame() {
 // AUTO PLAY GAME
 
 function autoEnterResult() {
+  if(arrayResult[0]){
+    if(dropsCount%6 == 0) {
+      result.textContent = 122;
+      setTimeout(clearScreen, 3000);
+    }
+    else {
   result.textContent = arrayResult[0].equation;
   setTimeout(clearScreen, 1000);
+}}
 }
 
 function onAutoPlay() {
   startGame();
   setTimeout(function autoPlay() {
-    result.textContent == arrayResult[0].equation;
+    setTimeout(autoEnterResult, 4500);
+    if (arrayResult[0]) {
     enterNumber();
-    setTimeout(autoEnterResult, 1500);
-    setTimeout(autoPlay, 2000);
+    };
+    setTimeout(autoPlay, 5000);
   }, 2500);
 }
 
