@@ -42,8 +42,6 @@ function goNextPage() {
   start.style.display = "flex";
 }
 
-//Play song
-song.play();
 
 //RANDOM NUMBER AND OPERATOR
 
