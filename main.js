@@ -230,91 +230,28 @@ function enterNumber() {
 
 // ADD ENTER FROM KEYBOARD
 
-function addKeyBoard(e) {
-  if (result.textContent.length > 5) {
-    return result.textContent;
-  }
-  const zero = result.textContent === "0";
-  if (e.which == 49) {
-    if (zero) {
-      result.textContent = "1";
-    } else {
-      result.textContent += "1";
+  const isNumberRegExp = /^[0-9]$/;
+  const addKeyBoard = (number) => {
+    const isNumber = isNumberRegExp.test(number);
+    const isCorrectLength = result.textContent.length < 5;
+    if (!isNumber || !isCorrectLength) return;
+    result.innerHTML = eval(result.innerHTML+number);  
+  };
+  const addKeyControl = (e) => {
+    addKeyBoard(e.key);
+    if (e.which == 8) {
+      clearScreen();
+    }
+    if (e.which == 46) {
+      deleteNumber();
+    }
+    if (e.which == 13) {
+      enterNumber();
+      clearScreen();
     }
   }
-  if (e.which == 50) {
-    if (zero) {
-      result.textContent = "2";
-    } else {
-      result.textContent += "2";
-    }
-  }
-  if (e.which == 51) {
-    if (zero) {
-      result.textContent = "3";
-    } else {
-      result.textContent += "3";
-    }
-  }
-  if (e.which == 52) {
-    if (zero) {
-      result.textContent = "4";
-    } else {
-      result.textContent += "4";
-    }
-  }
-  if (e.which == 53) {
-    if (zero) {
-      result.textContent = "5";
-    } else {
-      result.textContent += "5";
-    }
-  }
-  if (e.which == 54) {
-    if (zero) {
-      result.textContent = "6";
-    } else {
-      result.textContent += "6";
-    }
-  }
-  if (e.which == 55) {
-    if (zero) {
-      result.textContent = "7";
-    } else {
-      result.textContent += "7";
-    }
-  }
-  if (e.which == 56) {
-    if (zero) {
-      result.textContent = "8";
-    } else {
-      result.textContent += "8";
-    }
-  }
-  if (e.which == 57) {
-    if (zero) {
-      result.textContent = "9";
-    } else {
-      result.textContent += "9";
-    }
-  }
-  if (e.which == 48) {
-    if (zero) {
-      result.textContent = "0";
-    } else {
-      result.textContent += "0";
-    }
-  }
-  if (e.which == 46) {
-    clearScreen();
-  }
-  if (e.which == 8) {
-    deleteNumber();
-  }
-  if (e.which == 13) {
-    enterNumber();
-  }
-}
+
+// GAME OVER
 
 function gameOver() {
   clearInterval(startOne);
@@ -364,4 +301,4 @@ clearBtn.addEventListener("click", clearScreen);
 deleteBtn.addEventListener("click", deleteNumber);
 enterBtn.addEventListener("click", enterNumber);
 window.addEventListener("click", addFullScreen);
-window.addEventListener("keyup", addKeyBoard);
+window.addEventListener("keyup", addKeyControl);
